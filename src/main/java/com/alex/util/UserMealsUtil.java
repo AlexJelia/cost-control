@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.alex.util.TimeUtil.isBetweenInclusive;
 
@@ -28,17 +29,12 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExcess> getFilteredWithExcess(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Map<LocalDate, Integer> sumPerDay = new HashMap<>();
-        for (UserMeal meal : meals) {
-            LocalDate day = meal.getDateTime().toLocalDate();
-            sumPerDay.put(day, sumPerDay.getOrDefault(day, 0) + meal.getCalories());
-        }
-        List<UserMealWithExcess> mealWithExcessList = new ArrayList<>();
-        for (UserMeal meal : meals) {
-            if (isBetweenInclusive(meal.getDateTime().toLocalTime(), startTime, endTime)) {
-                mealWithExcessList.add(new UserMealWithExcess(meal.getDateTime(), meal.getDescription(), meal.getCalories(), sumPerDay.get(meal.getDateTime().toLocalDate()) > caloriesPerDay));
-            }
-        }
-        return mealWithExcessList;
+        Map<LocalDate, Integer> sumPerDay = meals.stream()
+                .collect(Collectors.groupingBy(el -> el.getDateTime().toLocalDate(), Collectors.summingInt(UserMeal::getCalories)));
+        return meals.stream()
+                .filter(el -> isBetweenInclusive(el.getDateTime().toLocalTime(), startTime, endTime))
+                .map(el -> new UserMealWithExcess(el.getDateTime(), el.getDescription(), el.getCalories(),
+                        sumPerDay.get(el.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
     }
 }
