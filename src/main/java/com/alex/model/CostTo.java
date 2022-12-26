@@ -2,19 +2,19 @@ package com.alex.model;
 
 import java.time.LocalDateTime;
 
-public class UserMealWithExcess {
+public class CostTo {
     private final LocalDateTime dateTime;
 
     private final String description;
 
-    private final int calories;
+    private final int cost;
 
     private final boolean excess;
 
-    public UserMealWithExcess(LocalDateTime dateTime, String description, int calories, boolean excess) {
+    public CostTo(LocalDateTime dateTime, String description, int cost, boolean excess) {
         this.dateTime = dateTime;
         this.description = description;
-        this.calories = calories;
+        this.cost = cost;
         this.excess = excess;
     }
 
@@ -23,7 +23,7 @@ public class UserMealWithExcess {
         return "UserMealWithExcess{" +
                 "dateTime=" + dateTime +
                 ", description='" + description + '\'' +
-                ", calories=" + calories +
+                ", costs=" + cost +
                 ", excess=" + excess +
                 '}';
     }
