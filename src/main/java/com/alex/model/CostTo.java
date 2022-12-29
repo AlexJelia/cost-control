@@ -18,6 +18,22 @@ public class CostTo {
         this.excess = excess;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public boolean isExcess() {
+        return excess;
+    }
+
     @Override
     public String toString() {
         return "UserMealWithExcess{" +

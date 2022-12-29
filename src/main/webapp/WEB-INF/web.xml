@@ -16,4 +16,14 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>costServlet</servlet-name>
+        <servlet-class>com.alex.web.CostServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>costServlet</servlet-name>
+        <url-pattern>/costs</url-pattern>
+    </servlet-mapping>
+
 </web-app>
