@@ -3,15 +3,14 @@ package com.alex.model;
 import java.time.LocalDateTime;
 
 public class CostTo {
-    private final LocalDateTime dateTime;
+    protected Integer id;
+    protected final LocalDateTime dateTime;
+    protected final String description;
+    protected final int cost;
+    protected final boolean excess;
 
-    private final String description;
-
-    private final int cost;
-
-    private final boolean excess;
-
-    public CostTo(LocalDateTime dateTime, String description, int cost, boolean excess) {
+    public CostTo(Integer id, LocalDateTime dateTime, String description, int cost, boolean excess) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.cost = cost;
@@ -20,6 +19,10 @@ public class CostTo {
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -36,10 +39,11 @@ public class CostTo {
 
     @Override
     public String toString() {
-        return "UserMealWithExcess{" +
-                "dateTime=" + dateTime +
+        return "CostTo{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
                 ", description='" + description + '\'' +
-                ", costs=" + cost +
+                ", cost=" + cost +
                 ", excess=" + excess +
                 '}';
     }

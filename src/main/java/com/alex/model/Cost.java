@@ -5,16 +5,28 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Cost {
-    private final LocalDateTime dateTime;
-
-    private final String description;
-
-    private final int cost;
+    protected Integer id;
+    protected final LocalDateTime dateTime;
+    protected final String description;
+    protected final int cost;
 
     public Cost(LocalDateTime dateTime, String description, int cost) {
+        this(null, dateTime, description, cost);
+    }
+
+    public Cost(Integer id, LocalDateTime dateTime, String description, int cost) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.cost = cost;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public LocalDateTime getDateTime() {
@@ -35,5 +47,19 @@ public class Cost {
 
     public int getCost() {
         return cost;
+    }
+
+    public boolean isNew() {
+        return id == null;
+    }
+
+    @Override
+    public String toString() {
+        return "Cost{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }
