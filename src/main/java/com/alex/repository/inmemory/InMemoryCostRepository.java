@@ -1,6 +1,7 @@
-package com.alex.repository;
+package com.alex.repository.inmemory;
 
 import com.alex.model.Cost;
+import com.alex.repository.CostRepository;
 import com.alex.util.CostsUtil;
 
 import java.util.Collection;

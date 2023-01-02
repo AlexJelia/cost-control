@@ -2,7 +2,7 @@ package com.alex.web;
 
 import com.alex.model.Cost;
 import com.alex.repository.CostRepository;
-import com.alex.repository.InMemoryCostRepository;
+import com.alex.repository.inmemory.InMemoryCostRepository;
 import com.alex.util.CostsUtil;
 import org.slf4j.Logger;
 
