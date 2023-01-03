@@ -1,7 +1,7 @@
 package com.alex.util;
 
 import com.alex.model.Cost;
-import com.alex.model.CostTo;
+import com.alex.to.CostTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

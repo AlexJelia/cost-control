@@ -1,7 +1,8 @@
-package com.alex.model;
+package com.alex.to;
 
 import java.time.LocalDateTime;
 
+//transfer object
 public class CostTo {
     protected Integer id;
     protected final LocalDateTime dateTime;

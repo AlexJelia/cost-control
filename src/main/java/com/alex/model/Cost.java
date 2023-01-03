@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Cost {
+public class Cost extends AbstractBaseEntity {
     protected Integer id;
     protected final LocalDateTime dateTime;
     protected final String description;
@@ -15,6 +15,7 @@ public class Cost {
     }
 
     public Cost(Integer id, LocalDateTime dateTime, String description, int cost) {
+        super(id);
         this.id = id;
         this.dateTime = dateTime;
         this.description = description;

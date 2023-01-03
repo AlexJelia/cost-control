@@ -32,7 +32,7 @@
         </tr>
         </thead>
         <c:forEach items="${costsList}" var="cost">
-            <jsp:useBean id="cost" type="com.alex.model.CostTo"/>
+            <jsp:useBean id="cost" type="com.alex.to.CostTo"/>
             <tr class="${cost.excess ? 'excess' : 'normal'}">
                 <td>
                     <%=TimeUtil.toString(cost.getDateTime())%>
