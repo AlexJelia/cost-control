@@ -2,6 +2,7 @@ package com.alex.util;
 
 import com.alex.model.Cost;
 import com.alex.to.CostTo;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class CostsUtil {
         return getFilteredWithExcess(costs, LocalTime.MIN, LocalTime.MAX, costsPerDay);
     }
 
-    public static List<CostTo> getFilteredWithExcess(Collection<Cost> costs, LocalTime startTime, LocalTime endTime, int costsPerDay) {
+    public static List<CostTo> getFilteredWithExcess(Collection<Cost> costs, @Nullable LocalTime startTime,@Nullable LocalTime endTime, int costsPerDay) {
         Map<LocalDate, Integer> sumPerDay = costs.stream()
                 .collect(Collectors.groupingBy(Cost::getDate, Collectors.summingInt(Cost::getCost)));
         return costs.stream()
