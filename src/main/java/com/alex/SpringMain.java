@@ -3,12 +3,18 @@ package com.alex;
 import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.repository.UserRepository;
+import com.alex.to.CostTo;
+import com.alex.web.cost.CostRestController;
 import com.alex.web.user.AdminRestController;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.Arrays;
+import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {
@@ -19,8 +25,17 @@ public class SpringMain {
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "Hank", "email@mail.ru", "password", Role.ROLE_ADMIN));
 
-            UserRepository userRepository = appCtx.getBean(UserRepository.class);
-            userRepository.getAll();
+            System.out.println();
+
+            CostRestController costController = appCtx.getBean(CostRestController.class);
+
+            System.out.println(costController.getAll());
+
+            List<CostTo> filteredCostsWithExcess =
+                    costController.getBetween(
+                            LocalDate.of(2020, Month.JANUARY, 1), LocalTime.of(7, 0),
+                            LocalDate.of(2020, Month.JANUARY, 31), LocalTime.of(11, 0));
+            filteredCostsWithExcess.forEach(System.out::println);
         }
     }
 }
