@@ -15,7 +15,6 @@ public class Cost extends AbstractBaseEntity {
 
     public Cost(Integer id, LocalDateTime dateTime, String description, int cost) {
         super(id);
-        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.cost = cost;
@@ -39,10 +38,6 @@ public class Cost extends AbstractBaseEntity {
 
     public int getCost() {
         return cost;
-    }
-
-    public boolean isNew() {
-        return id == null;
     }
 
     @Override

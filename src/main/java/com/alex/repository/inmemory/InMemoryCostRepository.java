@@ -4,22 +4,22 @@ import com.alex.model.Cost;
 import com.alex.repository.CostRepository;
 import com.alex.util.CostsUtil;
 import com.alex.util.Util;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.alex.repository.inmemory.InMemoryUserRepository.ADMIN_ID;
 import static com.alex.repository.inmemory.InMemoryUserRepository.USER_ID;
 
+@Repository
 public class InMemoryCostRepository implements CostRepository {
-    private final Map<Integer, Map<Integer, Cost>> usersCostsMap = new ConcurrentHashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
+    private Map<Integer, InMemoryBaseRepository<Cost>> usersCostsMap = new ConcurrentHashMap<>();
 
     {
         CostsUtil.COST_LIST.forEach(meal -> save(meal, USER_ID));
@@ -31,46 +31,35 @@ public class InMemoryCostRepository implements CostRepository {
     //todo check
     @Override
     public Cost save(Cost cost, int userId) {
-        // We cannot use method reference "ConcurrentHashMap::new" here. It will be equivalent wrong "new ConcurrentHashMap<>(userId)"
-        Map<Integer, Cost> costs = usersCostsMap.computeIfAbsent(userId, uId -> new ConcurrentHashMap<>());
-        if (cost.isNew()) {
-            cost.setId(counter.incrementAndGet());
-            costs.put(cost.getId(), cost);
-            return cost;
-        }
-        // treat case: update, but not present in storage
-        return costs.computeIfPresent(cost.getId(), (id, oldCost) -> cost);
+        InMemoryBaseRepository<Cost> costs = usersCostsMap.computeIfAbsent(userId, uid -> new InMemoryBaseRepository<>());
+        return costs.save(cost);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        Map<Integer, Cost> meals = usersCostsMap.get(userId);
-        return meals != null && meals.remove(id) != null;
+        InMemoryBaseRepository<Cost> costs = usersCostsMap.get(userId);
+        return costs != null && costs.delete(id);
     }
 
     @Override
     public Cost get(int id, int userId) {
-        Map<Integer, Cost> meals = usersCostsMap.get(userId);
-        return meals == null ? null : meals.get(id);
+        InMemoryBaseRepository<Cost> costs = usersCostsMap.get(userId);
+        return costs == null ? null : costs.get(id);
     }
 
     public List<Cost> getAll(int userId) {
-        Map<Integer, Cost> meals = usersCostsMap.get(userId);
-        return CollectionUtils.isEmpty(meals) ? Collections.emptyList() :
-                meals.values().stream()
-                        .sorted(Comparator.comparing(Cost::getDateTime).reversed())
-                        .collect(Collectors.toList());
+       return getAllFiltered(userId,cost -> true);
     }
 
     @Override
     public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return getAllFiltered(userId, meal -> Util.isBetweenInclusive(meal.getDateTime(), startDateTime, endDateTime));
+        return getAllFiltered(userId, cost -> Util.isBetweenInclusive(cost.getDateTime(), startDateTime, endDateTime));
     }
 
     private List<Cost> getAllFiltered(int userId, Predicate<Cost> filter) {
-        Map<Integer, Cost> meals = usersCostsMap.get(userId);
-        return CollectionUtils.isEmpty(meals) ? Collections.emptyList() :
-                meals.values().stream()
+        InMemoryBaseRepository<Cost> meals = usersCostsMap.get(userId);
+        return meals == null ? Collections.emptyList() :
+                meals.getCollection().stream()
                         .filter(filter)
                         .sorted(Comparator.comparing(Cost::getDateTime).reversed())
                         .collect(Collectors.toList());
