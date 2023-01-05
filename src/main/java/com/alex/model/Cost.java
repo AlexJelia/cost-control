@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Cost extends AbstractBaseEntity {
-    protected Integer id;
     protected final LocalDateTime dateTime;
     protected final String description;
     protected final int cost;
@@ -20,14 +19,6 @@ public class Cost extends AbstractBaseEntity {
         this.dateTime = dateTime;
         this.description = description;
         this.cost = cost;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public LocalDateTime getDateTime() {

@@ -38,7 +38,7 @@ public class CostServlet extends HttpServlet {
                 Integer.parseInt(request.getParameter("cost")));
 
         log.info(cost.isNew() ? "Create {}" : "Update {}", cost);
-        repository.save(cost);
+        repository.save(cost, SecurityUtil.authUserId());
         response.sendRedirect("costs");
     }
 
@@ -50,21 +50,21 @@ public class CostServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete id={}", id);
-                repository.delete(id);
+                repository.delete(id, SecurityUtil.authUserId());
                 response.sendRedirect("costs");
                 break;
             case "create":
             case "update":
                 final Cost cost = "create".equals(action) ?
                         new Cost(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        repository.get(getId(request));
+                        repository.get(getId(request), SecurityUtil.authUserId());
                 request.setAttribute("cost", cost);
                 request.getRequestDispatcher("/costForm.jsp").forward(request, response);
                 break;
             case "all":
             default:
                 log.info("getAll");
-                request.setAttribute("costsList", CostsUtil.getWithExcess(repository.getAll(), CostsUtil.DEFAULT_COSTS_PER_DAY));
+                request.setAttribute("costsList", CostsUtil.getWithExcess(repository.getAll(SecurityUtil.authUserId()), CostsUtil.DEFAULT_COSTS_PER_DAY));
                 request.getRequestDispatcher("/costs.jsp").forward(request, response);
                 break;
         }

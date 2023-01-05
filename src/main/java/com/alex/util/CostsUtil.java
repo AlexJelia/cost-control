@@ -10,7 +10,6 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.alex.util.TimeUtil.isBetween;
 
 public class CostsUtil {
     public static final int DEFAULT_COSTS_PER_DAY = 2000;
@@ -32,14 +31,9 @@ public class CostsUtil {
         Map<LocalDate, Integer> sumPerDay = costs.stream()
                 .collect(Collectors.groupingBy(Cost::getDate, Collectors.summingInt(Cost::getCost)));
         return costs.stream()
-                .filter(el -> isBetween(el.getTime(), startTime, endTime))
+                .filter(el -> Util.isBetweenInclusive(el.getTime(), startTime, endTime))
                 .map(el -> new CostTo(el.getId(), el.getDateTime(), el.getDescription(), el.getCost(),
                         sumPerDay.get(el.getDate()) > costsPerDay))
                 .collect(Collectors.toList());
-    }
-
-    //factory method
-    public static CostTo createWithExcess(Cost cost, boolean excess) {
-        return new CostTo(cost.getId(), cost.getDateTime(), cost.getDescription(), cost.getCost(), excess);
     }
 }
