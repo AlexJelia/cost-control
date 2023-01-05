@@ -24,11 +24,11 @@ public class CostsUtil {
             new Cost(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
     );
 
-    public static List<CostTo> getWithExcess(Collection<Cost> costs, int costsPerDay) {
-        return getFilteredWithExcess(costs, LocalTime.MIN, LocalTime.MAX, costsPerDay);
+    public static List<CostTo> getTransferObjects(Collection<Cost> costs, int costsPerDay) {
+        return getFilteredTransferObjects(costs, LocalTime.MIN, LocalTime.MAX, costsPerDay);
     }
 
-    public static List<CostTo> getFilteredWithExcess(Collection<Cost> costs, @Nullable LocalTime startTime,@Nullable LocalTime endTime, int costsPerDay) {
+    public static List<CostTo> getFilteredTransferObjects(Collection<Cost> costs, @Nullable LocalTime startTime, @Nullable LocalTime endTime, int costsPerDay) {
         Map<LocalDate, Integer> sumPerDay = costs.stream()
                 .collect(Collectors.groupingBy(Cost::getDate, Collectors.summingInt(Cost::getCost)));
         return costs.stream()

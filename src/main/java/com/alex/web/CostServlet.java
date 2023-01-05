@@ -64,7 +64,7 @@ public class CostServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                request.setAttribute("costsList", CostsUtil.getWithExcess(repository.getAll(SecurityUtil.authUserId()), CostsUtil.DEFAULT_COSTS_PER_DAY));
+                request.setAttribute("costsList", CostsUtil.getTransferObjects(repository.getAll(SecurityUtil.authUserId()), CostsUtil.DEFAULT_COSTS_PER_DAY));
                 request.getRequestDispatcher("/costs.jsp").forward(request, response);
                 break;
         }
