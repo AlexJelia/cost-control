@@ -3,11 +3,10 @@ package com.alex.repository;
 import com.alex.model.Cost;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public interface CostRepository {
-    Cost save(Cost meal, int userId);
+    Cost save(Cost cost, int userId);
 
     boolean delete(int id, int userId);
 

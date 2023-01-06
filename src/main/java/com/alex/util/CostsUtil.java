@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 public class CostsUtil {
     public static final int DEFAULT_COSTS_PER_DAY = 2000;
     public static final List<Cost> COST_LIST = Arrays.asList(
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Оплата Штрафа", 500),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Расход на граничное значение", 100),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Оплата мобильного", 500),
-            new Cost(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 30, 13, 0), "Обед", 1000),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 30, 20, 0), "Оплата Штрафа", 500),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 31, 0, 0), "Расход на граничное значение", 100),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 31, 13, 0), "Оплата мобильного", 500),
+            new Cost(LocalDateTime.of(2022, Month.JANUARY, 31, 20, 0), "Ужин", 410)
     );
 
     public static List<CostTo> getTransferObjects(Collection<Cost> costs, int costsPerDay) {

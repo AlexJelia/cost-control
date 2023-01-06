@@ -1,8 +1,6 @@
 package com.alex.web;
 
 import com.alex.model.Cost;
-import com.alex.repository.inmemory.InMemoryCostRepository;
-import com.alex.util.CostsUtil;
 import com.alex.web.cost.CostRestController;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,9 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import static com.alex.util.TimeUtil.parseLocalDate;
+import static com.alex.util.TimeUtil.parseLocalTime;
 
 public class CostServlet extends HttpServlet {
     private ConfigurableApplicationContext springContext;
@@ -70,6 +73,14 @@ public class CostServlet extends HttpServlet {
                         costController.get(getId(request));
                 request.setAttribute("cost", cost);
                 request.getRequestDispatcher("/costForm.jsp").forward(request, response);
+                break;
+            case "filter":
+                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+                request.setAttribute("costsList", costController.getBetween(startDate, startTime, endDate, endTime));
+                request.getRequestDispatcher("/costs.jsp").forward(request, response);
                 break;
             case "all":
             default:

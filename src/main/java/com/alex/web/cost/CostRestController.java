@@ -28,13 +28,13 @@ public class CostRestController {
 
     public Cost get(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("get meal {} for user {}", id, userId);
+        log.info("get cost {} for user {}", id, userId);
         return service.get(id, userId);
     }
 
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("delete meal {} for user {}", id, userId);
+        log.info("delete cost {} for user {}", id, userId);
         service.delete(id, userId);
     }
 
@@ -63,8 +63,8 @@ public class CostRestController {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
 
-        List<Cost> mealsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
-        return CostsUtil.getFilteredTransferObjects(mealsDateFiltered, startTime, endTime,SecurityUtil.authUserCostsPerDay());
+        List<Cost> costsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
+        return CostsUtil.getFilteredTransferObjects(costsDateFiltered, startTime, endTime,SecurityUtil.authUserCostsPerDay());
     }
 
 

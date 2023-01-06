@@ -4,11 +4,15 @@
     <title>Java Enterprise</title>
 </head>
 <body>
-<h3>Проект <a href="https://github.com/AlexJelia" target="_blank">Cost Control</a></h3>
+<h3>Проект <a href="https://github.com/AlexJelia/cost-control" target="_blank">Cost Control</a></h3>
 <hr>
-<ul>
-    <li><a href="users">Users</a></li>
-    <li><a href="costs">Costs</a></li>
-</ul>
+<form method="post" action="users">
+    <b>Costs of&nbsp;</b>
+    <select name="userId">
+        <option value="1">User</option>
+        <option value="2">Admin</option>
+    </select>
+    <button type="submit">Select</button>
+</form>
 </body>
 </html>
