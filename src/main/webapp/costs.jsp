@@ -12,6 +12,7 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Costs</h2>
+   <%-- get because dont change statement and dont reset by f5--%>
     <form method="get" action="costs">
         <input type="hidden" name="action" value="filter">
         <dl>

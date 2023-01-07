@@ -1,4 +1,4 @@
-package com.alex.repository.inmemory;
+package com.alex.costmanager.repository.inmemory;
 
 import com.alex.model.AbstractBaseEntity;
 import org.springframework.stereotype.Repository;
@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
 
-    private static  AtomicInteger counter = new AtomicInteger(0);
+     static final  AtomicInteger counter = new AtomicInteger(0);
 
-    private Map<Integer, T> map = new ConcurrentHashMap<>();
+     Map<Integer, T> map = new ConcurrentHashMap<>();
 
     public T save(T entry) {
         if (entry.isNew()) {
@@ -34,5 +34,9 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
 
     Collection<T> getCollection() {
         return map.values();
+    }
+
+    void put(T entity) {
+        map.put(entity.getId(), entity);
     }
 }

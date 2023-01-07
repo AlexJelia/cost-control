@@ -1,17 +1,26 @@
-package com.alex.repository.inmemory;
+package com.alex.costmanager.repository.inmemory;
 
+import com.alex.costmanager.UserTestData;
 import com.alex.model.User;
 import com.alex.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.alex.costmanager.UserTestData.ADMIN;
+import static com.alex.costmanager.UserTestData.USER;
 
 
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
-    public static final int USER_ID = 1;
-    public static final int ADMIN_ID = 2;
+
+    public void init() {
+        map.clear();
+        map.put(UserTestData.USER_ID, USER);
+        map.put(UserTestData.ADMIN_ID, ADMIN);
+    }
 
     @Override
     public List<User> getAll() {

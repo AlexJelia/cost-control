@@ -1,4 +1,4 @@
-package com.alex.repository.inmemory;
+package com.alex.costmanager.repository.inmemory;
 
 import com.alex.model.Cost;
 import com.alex.repository.CostRepository;
@@ -16,8 +16,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.alex.repository.inmemory.InMemoryUserRepository.ADMIN_ID;
-import static com.alex.repository.inmemory.InMemoryUserRepository.USER_ID;
+import static com.alex.costmanager.UserTestData.ADMIN_ID;
+import static com.alex.costmanager.UserTestData.USER_ID;
+
 
 @Repository
 public class InMemoryCostRepository implements CostRepository {
@@ -50,7 +51,7 @@ public class InMemoryCostRepository implements CostRepository {
     }
 
     public List<Cost> getAll(int userId) {
-       return getAllFiltered(userId,cost -> true);
+        return getAllFiltered(userId,cost -> true);
     }
 
     @Override
@@ -67,5 +68,4 @@ public class InMemoryCostRepository implements CostRepository {
                         .collect(Collectors.toList());
     }
 }
-
 
