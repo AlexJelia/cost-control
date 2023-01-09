@@ -23,8 +23,8 @@ public class User extends AbstractNamedEntity {
 
     private int costsPerDay = DEFAULT_COSTS_PER_DAY;
 
-    /*public User() {
-    }*/
+    public User() {
+    }
 
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getCostsPerDay(), u.isEnabled(), u.getRegistered(), u.getRoles());
