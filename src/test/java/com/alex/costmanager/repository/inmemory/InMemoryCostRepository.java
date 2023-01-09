@@ -31,7 +31,6 @@ public class InMemoryCostRepository implements CostRepository {
         save(new Cost(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Штраф", 1500), ADMIN_ID);
     }
 
-    //todo check
     @Override
     public Cost save(Cost cost, int userId) {
         InMemoryBaseRepository<Cost> costs = usersCostsMap.computeIfAbsent(userId, uid -> new InMemoryBaseRepository<>());

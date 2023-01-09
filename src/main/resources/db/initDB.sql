@@ -27,8 +27,8 @@ CREATE TABLE user_roles
 
 CREATE TABLE costs
 (
-    id   SERIAL PRIMARY KEY,
-    date TIMESTAMP DEFAULT now() NOT NULL,
+    id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    date_time TIMESTAMP DEFAULT now() NOT NULL,
     description VARCHAR NOT NULL,
     cost INTEGER NOT NULL,
     user_id INTEGER NOT NULL,

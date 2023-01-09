@@ -5,9 +5,17 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Cost extends AbstractBaseEntity {
-    protected final LocalDateTime dateTime;
-    protected final String description;
-    protected final int cost;
+    protected LocalDateTime dateTime;
+    protected String description;
+    protected int cost;
+
+    public Cost() {
+    }
+
+    //todo check
+    public Cost(Cost c) {
+        this(c.getId(),c.getDateTime(),c.getDescription(),c.getCost());
+    }
 
     public Cost(LocalDateTime dateTime, String description, int cost) {
         this(null, dateTime, description, cost);
@@ -38,6 +46,18 @@ public class Cost extends AbstractBaseEntity {
 
     public int getCost() {
         return cost;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     @Override
