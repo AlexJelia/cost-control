@@ -1,10 +1,12 @@
 package com.alex.web;
 
+import com.alex.model.AbstractBaseEntity;
+
 import static com.alex.util.CostsUtil.DEFAULT_COSTS_PER_DAY;
 
 public class SecurityUtil {
 
-    private static int id = 1;
+    private static int id = AbstractBaseEntity.START_SEQ;
 
     public static int authUserId() {
         return id;
