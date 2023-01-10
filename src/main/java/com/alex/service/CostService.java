@@ -5,6 +5,7 @@ import com.alex.repository.CostRepository;
 import com.alex.util.TimeUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,10 +41,12 @@ public class CostService {
     }
 
     public void update(Cost cost, int userId) {
+        Assert.notNull(cost, "cost must not be null");
         checkNotFoundWithId(repository.save(cost, userId), cost.getId());
     }
 
     public Cost create(Cost cost, int userId) {
+        Assert.notNull(cost, "cost must not be null");
         return repository.save(cost, userId);
     }
 

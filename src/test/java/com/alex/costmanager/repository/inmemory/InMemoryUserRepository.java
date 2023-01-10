@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.alex.costmanager.UserTestData.ADMIN;
@@ -31,6 +32,7 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
 
     @Override
     public User getByEmail(String email) {
+        Objects.requireNonNull(email, "email must not be null");
         return getCollection().stream()
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()

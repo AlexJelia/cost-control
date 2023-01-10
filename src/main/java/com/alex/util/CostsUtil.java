@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 
 public class CostsUtil {
+
+    private CostsUtil() {
+    }
+
     public static final int DEFAULT_COSTS_PER_DAY = 2000;
 
     public static List<CostTo> getTransferObjects(Collection<Cost> costs, int costsPerDay) {

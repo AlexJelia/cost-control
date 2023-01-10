@@ -6,10 +6,7 @@ import com.alex.util.Util;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -19,9 +16,9 @@ import java.util.stream.Collectors;
 public class InMemoryCostRepository implements CostRepository {
     private Map<Integer, InMemoryBaseRepository<Cost>> usersCostsMap = new ConcurrentHashMap<>();
 
-    //todo check
     @Override
     public Cost save(Cost cost, int userId) {
+        Objects.requireNonNull(cost, "cost must not be null");
         InMemoryBaseRepository<Cost> costs = usersCostsMap.computeIfAbsent(userId, uid -> new InMemoryBaseRepository<>());
         return costs.save(cost);
     }
@@ -44,6 +41,8 @@ public class InMemoryCostRepository implements CostRepository {
 
     @Override
     public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        Objects.requireNonNull(startDateTime, "startDateTime must not be null");
+        Objects.requireNonNull(endDateTime, "endDateTime must not be null");
         return getAllFiltered(userId, cost -> Util.isBetweenInclusive(cost.getDateTime(), startDateTime, endDateTime));
     }
 
