@@ -18,7 +18,7 @@ import java.util.Collection;
 import static com.alex.costmanager.UserTestData.ADMIN;
 
 
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
