@@ -1,8 +1,9 @@
 package com.alex.repository;
 
 import com.alex.model.Cost;
+import org.springframework.lang.Nullable;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CostRepository {
@@ -14,5 +15,5 @@ public interface CostRepository {
 
     List<Cost> getAll(int userId);
 
-    List<Cost> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+    List<Cost> getBetween(@Nullable LocalDate startDate,@Nullable LocalDate endDate, int userId);
 }

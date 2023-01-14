@@ -2,13 +2,11 @@ package com.alex.service;
 
 import com.alex.model.Cost;
 import com.alex.repository.CostRepository;
-import com.alex.util.TimeUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import static com.alex.util.ValidationUtil.checkNotFoundWithId;
@@ -31,9 +29,7 @@ public class CostService {
     }
 
     public List<Cost> getBetweenDates(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
-        return repository.getBetween(
-               TimeUtil.createDateTime(startDate, LocalDate.MIN, LocalTime.MIN),
-               TimeUtil.createDateTime(endDate, LocalDate.MAX, LocalTime.MAX), userId);
+        return repository.getBetween(startDate, endDate, userId);
     }
 
     public List<Cost> getAll(int userId) {

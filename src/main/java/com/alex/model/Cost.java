@@ -1,13 +1,43 @@
 package com.alex.model;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@NamedQueries({
+        @NamedQuery(name = Cost.DELETE, query = "DELETE FROM Cost c WHERE c.id=:id and c.user.id=:userId "),
+        @NamedQuery(name = Cost.BETWEEN, query = "SELECT c FROM Cost c WHERE c.user.id=:user_id AND c.dateTime BETWEEN :startDate AND :endDate ORDER BY c.dateTime DESC"),
+        @NamedQuery(name = Cost.ALL_SORTED, query = "SELECT c FROM Cost c WHERE c.user.id=:userId ORDER BY c.dateTime DESC "),
+})
+@Entity
+@Table(name = "costs", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","date_time"}, name = "costs_unique_user_datetime_idx")})
 public class Cost extends AbstractBaseEntity {
+    public static final String DELETE = "Cost.delete";
+    public static final String BETWEEN = "Cost.getBetween";
+    public static final String ALL_SORTED = "Cost.getAll";
+
+    @Column(name ="date_time",nullable = false)
     protected  LocalDateTime dateTime;
+
+    @Column(name ="description",nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 120)
     protected  String description;
+
+    @Column(name ="cost",nullable = false)
+    @Range(min = 1, max = 1000000)
     protected  int cost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
+    private User user;
 
     public Cost(){
     }
@@ -53,6 +83,14 @@ public class Cost extends AbstractBaseEntity {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

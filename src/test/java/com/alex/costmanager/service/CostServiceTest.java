@@ -30,10 +30,10 @@ public class CostServiceTest {
     @Autowired
     private CostService service;
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void delete() throws Exception {
         service.delete(COST1_ID, USER_ID);
-        assertMatch(service.getAll(USER_ID), COST6, COST5, COST4, COST3, COST2);
+        service.get(COST1_ID, USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
@@ -48,11 +48,12 @@ public class CostServiceTest {
 
     @Test
     public void create() throws Exception {
-        Cost newMeal = getCreated();
-        Cost created = service.create(newMeal, USER_ID);
-        newMeal.setId(created.getId());
-        assertMatch(newMeal, created);
-        assertMatch(service.getAll(USER_ID), newMeal, COST6, COST5, COST4, COST3, COST2, COST1);
+        Cost newCost = getCreated();
+        Cost created = service.create(newCost, USER_ID);
+        Integer newId = created.getId();
+        newCost.setId(newId);
+        assertMatch(created, newCost);
+        assertMatch(service.get(newId, USER_ID), newCost);
     }
 
     @Test
@@ -93,5 +94,10 @@ public class CostServiceTest {
         assertMatch(service.getBetweenDates(
                 LocalDate.of(2022, Month.MAY, 30),
                 LocalDate.of(2022, Month.MAY, 30), USER_ID), COST3, COST2, COST1);
+    }
+
+    @Test
+    public void getBetweenWithNullDates() throws Exception {
+        assertMatch(service.getBetweenDates(null, null, USER_ID), COSTS);
     }
 }
