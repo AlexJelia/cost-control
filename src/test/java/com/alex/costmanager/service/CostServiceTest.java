@@ -93,7 +93,7 @@ public class CostServiceTest {
     public void getBetween() throws Exception {
         assertMatch(service.getBetweenDates(
                 LocalDate.of(2022, Month.MAY, 30),
-                LocalDate.of(2022, Month.MAY, 30), USER_ID), COST3, COST2, COST1);
+                LocalDate.of(2022, Month.MAY, 30), USER_ID),COST4, COST3, COST2, COST1);
     }
 
     @Test

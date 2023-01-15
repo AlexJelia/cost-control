@@ -12,7 +12,7 @@ import java.time.LocalTime;
 
 @NamedQueries({
         @NamedQuery(name = Cost.DELETE, query = "DELETE FROM Cost c WHERE c.id=:id and c.user.id=:userId "),
-        @NamedQuery(name = Cost.BETWEEN, query = "SELECT c FROM Cost c WHERE c.user.id=:user_id AND c.dateTime BETWEEN :startDate AND :endDate ORDER BY c.dateTime DESC"),
+        @NamedQuery(name = Cost.BETWEEN, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.dateTime >= :startDate and c.dateTime <=:endDate ORDER BY c.dateTime DESC"),
         @NamedQuery(name = Cost.ALL_SORTED, query = "SELECT c FROM Cost c WHERE c.user.id=:userId ORDER BY c.dateTime DESC "),
 })
 @Entity
