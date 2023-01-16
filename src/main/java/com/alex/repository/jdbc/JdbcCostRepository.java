@@ -20,13 +20,9 @@ import static com.alex.util.TimeUtil.getStartInclusive;
 
 @Repository
 public class JdbcCostRepository implements CostRepository {
-
     private static final RowMapper<Cost> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Cost.class);
-
     private final JdbcTemplate jdbcTemplate;
-
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
     private final SimpleJdbcInsert insertMeal;
 
     @Autowired
