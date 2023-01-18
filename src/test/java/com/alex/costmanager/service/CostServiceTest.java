@@ -1,5 +1,6 @@
 package com.alex.costmanager.service;
 
+import com.alex.Profiles;
 import com.alex.model.Cost;
 import com.alex.service.CostService;
 import com.alex.util.exception.NotFoundException;
@@ -12,6 +13,7 @@ import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -32,6 +34,7 @@ import static org.slf4j.LoggerFactory.getLogger;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles(Profiles.DATAJPA)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class CostServiceTest {
 

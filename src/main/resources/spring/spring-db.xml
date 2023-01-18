@@ -22,11 +22,11 @@
         <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install" />
     </bean>
 
-   <!-- <context:component-scan base-package="com.alex.**.repository.jdbc"/>-->
+    <!--<context:component-scan base-package="com.alex.**.repository.jdbc"/>-->
     <!--<context:component-scan base-package="com.alex.**.repository.jpa"/>-->
 
-    <context:component-scan base-package="com.alex.**.repository.datajpa"/>
-    <jpa:repositories base-package="com.alex.**.repository.datajpa"/>
+    <!--<context:component-scan base-package="com.alex.**.repository.datajpa"/>
+    <jpa:repositories base-package="com.alex.**.repository.datajpa"/>-->
 
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
@@ -70,19 +70,23 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
+    <beans profile="jdbc">
+        <context:component-scan base-package="com.alex.**.repository.jdbc"/>
 
-    <!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+           <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
          <constructor-arg ref="dataSource"/>
      </bean>
 
      <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
          <constructor-arg ref="jdbcTemplate"/>
-     </bean>-->
-
-    <beans profile="jdbc">
+     </bean>
     </beans>
     <beans profile="jpa">
+        <context:component-scan base-package="com.alex.**.repository.jpa"/>
+        <jpa:repositories base-package="com.alex.**.repository.datajpa"/>
     </beans>
     <beans profile="datajpa">
+        <context:component-scan base-package="com.alex.**.repository.datajpa"/>
+        <jpa:repositories base-package="com.alex.**.repository.datajpa"/>
     </beans>
 </beans>
