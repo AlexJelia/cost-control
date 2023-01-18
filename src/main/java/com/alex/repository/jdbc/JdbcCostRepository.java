@@ -79,10 +79,8 @@ public class JdbcCostRepository implements CostRepository {
 
     @Override
     public List<Cost> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
-        startDate = (startDate == null ? LocalDate.MIN : startDate);
-        endDate = (endDate == null ? LocalDate.MAX : endDate);
         return jdbcTemplate.query(
-                "SELECT * FROM costs WHERE user_id=?  AND date_time >=? AND date_time < ? ORDER BY date_time DESC",
+                "SELECT * FROM costs WHERE user_id=?  AND date_time BETWEEN ? and ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, getStartInclusive(startDate), getEndExclusive(endDate));
     }
 }
