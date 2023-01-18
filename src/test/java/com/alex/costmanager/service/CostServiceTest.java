@@ -90,7 +90,7 @@ public class CostServiceTest {
 
     @Test
     public void create() throws Exception {
-        Cost newCost = getCreated();
+        Cost newCost = getNew();
         Cost created = service.create(newCost, USER_ID);
         Integer newId = created.getId();
         newCost.setId(newId);
@@ -107,7 +107,7 @@ public class CostServiceTest {
     @Test
     public void getNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.get(COST1_ID, ADMIN_ID);
+        service.get(1, ADMIN_ID);
     }
 
     @Test

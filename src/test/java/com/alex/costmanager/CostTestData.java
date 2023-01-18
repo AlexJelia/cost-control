@@ -27,7 +27,7 @@ public class CostTestData {
 
     public static final List<Cost> COSTS = List.of(COST7,COST6, COST5, COST4, COST3, COST2, COST1);
 
-    public static Cost getCreated() {
+    public static Cost getNew() {
         return new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "Созданный расход", 300);
     }
 

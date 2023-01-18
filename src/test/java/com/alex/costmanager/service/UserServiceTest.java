@@ -29,7 +29,7 @@ import static com.alex.costmanager.UserTestData.*;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
-@ActiveProfiles(Profiles.DATAJPA)
+@ActiveProfiles(Profiles.JPA)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
@@ -46,7 +46,7 @@ public class UserServiceTest {
 
     @Test
     public void create() throws Exception {
-        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User newUser = getNew();
         User created = service.create(newUser);
         Integer newId = created.getId();
         newUser.setId(newId);
@@ -89,9 +89,7 @@ public class UserServiceTest {
 
     @Test
     public void update() throws Exception {
-        User updated = new User(USER);
-        updated.setName("UpdatedName");
-        updated.setCostsPerDay(330);
+        User updated = getUpdated();
         service.update(updated);
         assertMatch(service.get(USER_ID), updated);
     }

@@ -31,9 +31,10 @@ public class JpaCostRepository implements CostRepository {
         if (cost.isNew()) {
             em.persist(cost);
             return cost;
-        } else {
-            return em.merge(cost);
+        } else if (get(cost.getId(), userId) == null) {
+            return null;
         }
+        return em.merge(cost);
     }
 
     @Override

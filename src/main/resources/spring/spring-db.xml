@@ -83,7 +83,7 @@
     </beans>
     <beans profile="jpa">
         <context:component-scan base-package="com.alex.**.repository.jpa"/>
-        <jpa:repositories base-package="com.alex.**.repository.datajpa"/>
+        <jpa:repositories base-package="com.alex.**.repository.jpa"/>
     </beans>
     <beans profile="datajpa">
         <context:component-scan base-package="com.alex.**.repository.datajpa"/>

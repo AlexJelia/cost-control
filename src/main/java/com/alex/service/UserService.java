@@ -2,7 +2,6 @@ package com.alex.service;
 
 import com.alex.model.User;
 import com.alex.repository.UserRepository;
-import com.alex.util.exception.NotFoundException;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -29,15 +28,15 @@ public class UserService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id) {
         checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public User get(int id) throws NotFoundException {
+    public User get(int id) {
         return checkNotFoundWithId(repository.get(id), id);
     }
 
-    public User getByEmail(String email) throws NotFoundException {
+    public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
@@ -48,7 +47,7 @@ public class UserService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void update(User user) throws NotFoundException {
+    public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(user), user.getId());
     }
