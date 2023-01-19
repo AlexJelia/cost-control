@@ -1,13 +1,12 @@
 package com.alex.costmanager;
 
+import com.alex.Profiles;
 import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.to.CostTo;
 import com.alex.web.cost.CostRestController;
 import com.alex.web.user.AdminRestController;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,7 +18,11 @@ public class SpringMain {
     public static void main(String[] args) {
 
 
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/inmemory.xml")) {
+        try (GenericXmlApplicationContext appCtx = new GenericXmlApplicationContext()) {
+            appCtx.getEnvironment().setActiveProfiles( Profiles.REPOSITORY_IMPLEMENTATION);
+            appCtx.load("spring/spring-app.xml", "spring/spring-db.xml");
+            appCtx.refresh();
+
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "Hank", "email@mail.ru", "password", Role.ROLE_ADMIN));

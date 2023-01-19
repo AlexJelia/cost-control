@@ -1,35 +1,18 @@
 package com.alex.costmanager.service;
 
-import com.alex.Profiles;
 import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.service.UserService;
 import com.alex.util.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.List;
-
 import static com.alex.costmanager.UserTestData.*;
 
-
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@ActiveProfiles(Profiles.DATAJPA)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class UserServiceTest {
+public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
@@ -38,12 +21,12 @@ public class UserServiceTest {
     private CacheManager cacheManager;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         cacheManager.getCache("users").clear();
     }
 
     @Test
-    public void create() throws Exception {
+    public void create()  {
         User newUser = getNew();
         User created = service.create(newUser);
         Integer newId = created.getId();
@@ -53,47 +36,47 @@ public class UserServiceTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public void duplicateMailCreate() throws Exception {
+    public void duplicateMailCreate()  {
         service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
     }
 
     @Test(expected = NotFoundException.class)
-    public void delete() throws Exception {
+    public void delete()  {
         service.delete(USER_ID);
         service.get(USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
-    public void deletedNotFound() throws Exception {
+    public void deletedNotFound()  {
         service.delete(1);
     }
 
     @Test
-    public void get() throws Exception {
+    public void get()  {
         User user = service.get(USER_ID);
         assertMatch(user, USER);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNotFound() throws Exception {
+    public void getNotFound()  {
         service.get(1);
     }
 
     @Test
-    public void getByEmail() throws Exception {
+    public void getByEmail()  {
         User user = service.getByEmail("user@yandex.ru");
         assertMatch(user, USER);
     }
 
     @Test
-    public void update() throws Exception {
+    public void update()  {
         User updated = getUpdated();
         service.update(updated);
         assertMatch(service.get(USER_ID), updated);
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll()  {
         List<User> all = service.getAll();
         assertMatch(all, ADMIN, USER);
     }
