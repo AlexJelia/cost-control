@@ -17,8 +17,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import static com.alex.costmanager.UserTestData.*;
@@ -29,7 +27,7 @@ import static com.alex.costmanager.UserTestData.*;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
-@ActiveProfiles(Profiles.JPA)
+@ActiveProfiles(Profiles.DATAJPA)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 

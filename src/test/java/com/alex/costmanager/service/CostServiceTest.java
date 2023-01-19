@@ -34,7 +34,7 @@ import static org.slf4j.LoggerFactory.getLogger;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles(Profiles.JDBC)
+@ActiveProfiles(Profiles.DATAJPA)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class CostServiceTest {
 
