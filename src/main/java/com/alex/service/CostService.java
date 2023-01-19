@@ -46,4 +46,8 @@ public class CostService {
         return repository.save(cost, userId);
     }
 
+    public Cost getWithUser(int id, int userId) {
+        return checkNotFoundWithId(repository.getWithUser(id, userId), id);
+    }
+
 }

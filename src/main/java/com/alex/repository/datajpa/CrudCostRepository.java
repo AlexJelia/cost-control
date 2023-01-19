@@ -27,4 +27,7 @@ public interface CrudCostRepository extends JpaRepository<Cost, Integer> {
 
     @Query("SELECT c from Cost c WHERE c.user.id=:userId AND c.dateTime BETWEEN :startDate AND :endDate ORDER BY c.dateTime DESC")
     List<Cost> getBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("userId") int userId);
+
+    @Query("SELECT c FROM Cost c JOIN FETCH c.user WHERE c.id = ?1 and c.user.id = ?2")
+    Cost getWithUser(int id, int userId);
 }

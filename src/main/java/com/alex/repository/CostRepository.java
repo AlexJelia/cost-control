@@ -28,4 +28,8 @@ public interface CostRepository {
 
     // ORDERED dateTime desc
     List<Cost> getBetween(@NonNull LocalDateTime startDate, @NonNull LocalDateTime endDate, int userId);
+
+    default Cost getWithUser(int id, int userId) {
+        throw new UnsupportedOperationException();
+    }
 }

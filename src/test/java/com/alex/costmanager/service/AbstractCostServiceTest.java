@@ -15,7 +15,7 @@ import static com.alex.costmanager.UserTestData.USER_ID;
 
 public class AbstractCostServiceTest extends AbstractServiceTest {
     @Autowired
-    private CostService service;
+    protected CostService service;
 
     @Test
     public void delete()  {
@@ -48,7 +48,7 @@ public class AbstractCostServiceTest extends AbstractServiceTest {
 
     @Test
     public void get()  {
-        Cost actual = service.get(ADMIN_MEAL_ID, ADMIN_ID);
+        Cost actual = service.get(ADMIN_COST_ID, ADMIN_ID);
         assertMatch(actual, ADMIN_COST1);
     }
 
