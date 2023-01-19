@@ -8,11 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.alex.util.TimeUtil.getEndExclusive;
-import static com.alex.util.TimeUtil.getStartInclusive;
 
 @Repository
 @Transactional(readOnly = true)
@@ -60,11 +57,11 @@ public class JpaCostRepository implements CostRepository {
     }
 
     @Override
-    public List<Cost> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
+    public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return em.createNamedQuery(Cost.BETWEEN, Cost.class)
                 .setParameter("userId", userId)
-                .setParameter("startDate", getStartInclusive(startDate))
-                .setParameter("endDate", getEndExclusive(endDate))
+                .setParameter("startDate", startDateTime)
+                .setParameter("endDate", endDateTime)
                 .getResultList();
     }
 }

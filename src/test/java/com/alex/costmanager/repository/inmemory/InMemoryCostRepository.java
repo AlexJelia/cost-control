@@ -7,7 +7,7 @@ import com.alex.repository.CostRepository;
 import com.alex.util.Util;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
@@ -48,8 +48,8 @@ public class InMemoryCostRepository implements CostRepository {
     }
 
     @Override
-    public List<Cost> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
-        return getAllFiltered(userId, cost -> Util.isBetweenInclusive(cost.getDate(), startDate, endDate));
+    public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return getAllFiltered(userId, cost -> Util.isBetweenInclusive(cost.getDateTime(), startDateTime, endDateTime));
     }
 
     private List<Cost> getAllFiltered(int userId, Predicate<Cost> filter) {

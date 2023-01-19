@@ -12,11 +12,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.alex.util.TimeUtil.getEndExclusive;
-import static com.alex.util.TimeUtil.getStartInclusive;
 
 @Repository
 public class JdbcCostRepository implements CostRepository {
@@ -77,10 +74,16 @@ public class JdbcCostRepository implements CostRepository {
                 "SELECT * FROM costs WHERE user_id=? ORDER BY date_time DESC", ROW_MAPPER, userId);
     }
 
-    @Override
+   /* @Override
     public List<Cost> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
         return jdbcTemplate.query(
                 "SELECT * FROM costs WHERE user_id=?  AND date_time BETWEEN ? and ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, getStartInclusive(startDate), getEndExclusive(endDate));
+    }*/
+    @Override
+    public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM costs WHERE user_id=? AND date_time BETWEEN ? and ? ORDER BY date_time DESC",
+                ROW_MAPPER, userId, startDateTime, endDateTime);
     }
 }

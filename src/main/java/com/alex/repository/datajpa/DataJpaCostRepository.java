@@ -5,7 +5,7 @@ import com.alex.repository.CostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -35,7 +35,7 @@ public class DataJpaCostRepository implements CostRepository{
     }
 
     @Override
-    public List<Cost> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
+    public List<Cost> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return null;
     }
 }
