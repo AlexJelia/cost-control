@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 import static com.alex.costmanager.UserTestData.*;
 
-public class AbstractUserServiceTest extends AbstractServiceTest {
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;

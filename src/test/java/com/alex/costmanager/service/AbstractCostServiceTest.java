@@ -13,7 +13,7 @@ import static com.alex.costmanager.CostTestData.*;
 import static com.alex.costmanager.UserTestData.ADMIN_ID;
 import static com.alex.costmanager.UserTestData.USER_ID;
 
-public class AbstractCostServiceTest extends AbstractServiceTest {
+public abstract class AbstractCostServiceTest extends AbstractServiceTest {
     @Autowired
     protected CostService service;
 
