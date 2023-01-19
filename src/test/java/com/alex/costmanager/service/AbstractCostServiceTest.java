@@ -6,8 +6,10 @@ import com.alex.util.exception.NotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.Month;
+import static java.time.LocalDateTime.of;
 
 import static com.alex.costmanager.CostTestData.*;
 import static com.alex.costmanager.UserTestData.ADMIN_ID;
@@ -93,5 +95,14 @@ public abstract class AbstractCostServiceTest extends AbstractServiceTest {
     @Test
     public void getBetweenWithNullDates()  {
         assertMatch(service.getBetweenDates(null, null, USER_ID), COSTS);
+    }
+
+    //todo repair valid test
+    @Test
+    public void createWithException() throws Exception {
+        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new Cost(null, null, "Description", 300), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 9), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 5001), USER_ID), ConstraintViolationException.class);
     }
 }

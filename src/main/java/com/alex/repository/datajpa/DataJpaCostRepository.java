@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public class DataJpaCostRepository implements CostRepository{
+public class DataJpaCostRepository implements CostRepository {
 
     private final CrudCostRepository crudCostRepository;
     private final CrudUserRepository crudUserRepository;
