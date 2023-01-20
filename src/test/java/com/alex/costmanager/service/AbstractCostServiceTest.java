@@ -99,10 +99,10 @@ public abstract class AbstractCostServiceTest extends AbstractServiceTest {
 
     //todo repair valid test
     @Test
-    public void createWithException() throws Exception {
-        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
+    public void createWithException()  {
+        validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Cost(null, null, "Description", 300), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 9), USER_ID), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new Cost(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 5001), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "Description", 0), USER_ID), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "Description", 10000000), USER_ID), ConstraintViolationException.class);
     }
 }

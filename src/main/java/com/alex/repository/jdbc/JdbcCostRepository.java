@@ -2,6 +2,7 @@ package com.alex.repository.jdbc;
 
 import com.alex.model.Cost;
 import com.alex.repository.CostRepository;
+import com.alex.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -34,6 +35,7 @@ public class JdbcCostRepository implements CostRepository {
 
     @Override
     public Cost save(Cost cost, int userId) {
+        ValidationUtil.validate(cost);
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", cost.getId())
                 .addValue("description", cost.getDescription())

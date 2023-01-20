@@ -2,6 +2,7 @@ package com.alex.repository.jdbc;
 
 import com.alex.model.User;
 import com.alex.repository.UserRepository;
+import com.alex.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -32,6 +33,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
+        ValidationUtil.validate(user);
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
         if (user.isNew()) {

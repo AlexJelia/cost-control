@@ -18,31 +18,33 @@ import java.time.LocalTime;
         @NamedQuery(name = Cost.ALL_SORTED, query = "SELECT c FROM Cost c WHERE c.user.id=:userId ORDER BY c.dateTime DESC "),
 })
 @Entity
-@Table(name = "costs", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","date_time"}, name = "costs_unique_user_datetime_idx")})
+@Table(name = "costs", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "costs_unique_user_datetime_idx")})
 public class Cost extends AbstractBaseEntity {
     public static final String DELETE = "Cost.delete";
     public static final String BETWEEN = "Cost.getBetween";
     public static final String ALL_SORTED = "Cost.getAll";
 
-    @Column(name ="date_time",nullable = false)
-    protected  LocalDateTime dateTime;
+    @Column(name = "date_time", nullable = false)
+    @NotNull
+    protected LocalDateTime dateTime;
 
-    @Column(name ="description",nullable = false)
+    @Column(name = "description", nullable = false)
     @NotBlank
     @Size(min = 2, max = 120)
-    protected  String description;
+    protected String description;
 
-    @Column(name ="cost",nullable = false)
+    @Column(name = "cost", nullable = false)
     @Range(min = 1, max = 1000000)
-    protected  int cost;
+    protected int cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+    //validation test
+    //  @NotNull
     private User user;
 
-    public Cost(){
+    public Cost() {
     }
 
     public Cost(LocalDateTime dateTime, String description, int cost) {
