@@ -9,7 +9,7 @@
 </head>
 <body>
 <section>
-    <h3><a href="index.html">Home</a></h3>
+    <h3><a href="index.jsp">Home</a></h3>
     <hr/>
     <h2>Costs</h2>
    <%-- get because dont change statement and dont reset by f5--%>

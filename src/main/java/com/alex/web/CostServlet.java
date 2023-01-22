@@ -1,10 +1,10 @@
 package com.alex.web;
 
-import com.alex.Profiles;
 import com.alex.model.Cost;
 import com.alex.web.cost.CostRestController;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,23 +22,13 @@ import static com.alex.util.TimeUtil.parseLocalDate;
 import static com.alex.util.TimeUtil.parseLocalTime;
 
 public class CostServlet extends HttpServlet {
-    private ClassPathXmlApplicationContext springContext;
     private CostRestController costController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
-//       springContext.setConfigLocations("spring/spring-app.xml", "spring/spring-db.xml");
-        springContext.getEnvironment().setActiveProfiles(Profiles.REPOSITORY_IMPLEMENTATION);
-        springContext.refresh();
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         costController = springContext.getBean(CostRestController.class);
-    }
-
-    @Override
-    public void destroy() {
-        springContext.close();
-        super.destroy();
     }
 
     @Override
