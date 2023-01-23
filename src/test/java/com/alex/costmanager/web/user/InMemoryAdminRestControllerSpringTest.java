@@ -1,11 +1,8 @@
 package com.alex.costmanager.web.user;
 
-import com.alex.costmanager.UserTestData;
 import com.alex.costmanager.repository.inmemory.InMemoryUserRepository;
-import com.alex.model.User;
 import com.alex.util.exception.NotFoundException;
 import com.alex.web.user.AdminRestController;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Collection;
-
-import static com.alex.costmanager.UserTestData.ADMIN;
+import static com.alex.costmanager.UserTestData.USER_ID;
 
 
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
@@ -29,20 +24,18 @@ public class InMemoryAdminRestControllerSpringTest {
     private InMemoryUserRepository repository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         repository.init();
     }
 
-    @Test
-    public void delete() throws Exception {
-        controller.delete(UserTestData.USER_ID);
-        Collection<User> users = controller.getAll();
-        Assert.assertEquals(1, users.size());
-        Assert.assertEquals(ADMIN, users.iterator().next());
+    @Test(expected = NotFoundException.class)
+    public void delete() {
+        controller.delete(USER_ID);
+        controller.get(USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
-    public void deleteNotFound() throws Exception {
+    public void deleteNotFound() {
         controller.delete(10);
     }
 }
