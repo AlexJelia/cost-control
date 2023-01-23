@@ -21,11 +21,11 @@ public class JdbcCostRepository implements CostRepository {
     private static final RowMapper<Cost> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Cost.class);
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final SimpleJdbcInsert insertMeal;
+    private final SimpleJdbcInsert insertCost;
 
     @Autowired
     public JdbcCostRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.insertMeal = new SimpleJdbcInsert(jdbcTemplate)
+        this.insertCost = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("costs")
                 .usingGeneratedKeyColumns("id");
 
@@ -44,7 +44,7 @@ public class JdbcCostRepository implements CostRepository {
                 .addValue("user_id", userId);
 
         if (cost.isNew()) {
-            Number newId = insertMeal.executeAndReturnKey(map);
+            Number newId = insertCost.executeAndReturnKey(map);
             cost.setId(newId.intValue());
         } else {
             if (namedParameterJdbcTemplate.update("" +
@@ -65,9 +65,9 @@ public class JdbcCostRepository implements CostRepository {
 
     @Override
     public Cost get(int id, int userId) {
-        List<Cost> meals = jdbcTemplate.query(
+        List<Cost> costs = jdbcTemplate.query(
                 "SELECT * FROM costs WHERE id = ? AND user_id = ?", ROW_MAPPER, id, userId);
-        return DataAccessUtils.singleResult(meals);
+        return DataAccessUtils.singleResult(costs);
     }
 
     @Override
