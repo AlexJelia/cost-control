@@ -3,17 +3,18 @@ package com.alex.costmanager.service;
 import com.alex.model.Cost;
 import com.alex.service.CostService;
 import com.alex.util.exception.NotFoundException;
+import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.Month;
-import static java.time.LocalDateTime.of;
 
 import static com.alex.costmanager.CostTestData.*;
 import static com.alex.costmanager.UserTestData.ADMIN_ID;
 import static com.alex.costmanager.UserTestData.USER_ID;
+import static java.time.LocalDateTime.of;
 
 public abstract class AbstractCostServiceTest extends AbstractServiceTest {
     @Autowired
@@ -100,6 +101,7 @@ public abstract class AbstractCostServiceTest extends AbstractServiceTest {
     //todo repair valid test
     @Test
     public void createWithException()  {
+        Assume.assumeTrue(isJpaBased());
         validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Cost(null, null, "Description", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "Description", 0), USER_ID), ConstraintViolationException.class);

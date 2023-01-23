@@ -2,7 +2,6 @@ package com.alex.costmanager.service;
 
 import com.alex.model.Role;
 import com.alex.model.User;
-import com.alex.repository.JpaUtil;
 import com.alex.service.UserService;
 import com.alex.util.exception.NotFoundException;
 import org.junit.Before;
@@ -26,13 +25,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
-    @Autowired
-    protected JpaUtil jpaUtil;
-
     @Before
     public void setUp()  {
         cacheManager.getCache("users").clear();
-        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test

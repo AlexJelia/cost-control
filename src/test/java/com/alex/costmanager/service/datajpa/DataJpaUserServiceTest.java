@@ -1,7 +1,7 @@
 package com.alex.costmanager.service.datajpa;
 
 import com.alex.costmanager.CostTestData;
-import com.alex.costmanager.service.AbstractUserServiceTest;
+import com.alex.costmanager.service.AbstractJpaUserServiceTest;
 import com.alex.model.User;
 import com.alex.util.exception.NotFoundException;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import static com.alex.costmanager.UserTestData.*;
 
 
 @ActiveProfiles(DATAJPA)
-public class DataJpaUserServiceTest extends AbstractUserServiceTest {
+public class DataJpaUserServiceTest extends AbstractJpaUserServiceTest {
 
     @Test
     public void getWithCosts()  {
