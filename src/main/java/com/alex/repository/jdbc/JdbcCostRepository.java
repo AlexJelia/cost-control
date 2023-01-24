@@ -12,11 +12,13 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class JdbcCostRepository implements CostRepository {
     private static final RowMapper<Cost> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Cost.class);
     private final JdbcTemplate jdbcTemplate;
@@ -34,6 +36,7 @@ public class JdbcCostRepository implements CostRepository {
     }
 
     @Override
+    @Transactional
     public Cost save(Cost cost, int userId) {
         ValidationUtil.validate(cost);
         MapSqlParameterSource map = new MapSqlParameterSource()
@@ -59,6 +62,7 @@ public class JdbcCostRepository implements CostRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         return jdbcTemplate.update("DELETE FROM costs WHERE id=? AND user_id=?", id, userId) != 0;
     }
