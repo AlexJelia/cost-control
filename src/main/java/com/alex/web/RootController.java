@@ -1,6 +1,8 @@
 package com.alex.web;
 
+import com.alex.service.CostService;
 import com.alex.service.UserService;
+import com.alex.util.CostsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class RootController {
     @Autowired
-    private UserService service;
+    private UserService userService;
+
+    @Autowired
+    private CostService costService;
 
     @GetMapping("/")
     public String root() {
@@ -21,7 +26,7 @@ public class RootController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", service.getAll());
+        model.addAttribute("users", userService.getAll());
         return "users";
     }
 
@@ -30,5 +35,12 @@ public class RootController {
         int userId = Integer.parseInt(request.getParameter("userId"));
         SecurityUtil.setAuthUserId(userId);
         return "redirect:costs";
+    }
+
+    @GetMapping("/costs")
+    public String getCosts(Model model) {
+        model.addAttribute("costs",
+                CostsUtil.getTransferObjects(costService.getAll(SecurityUtil.authUserId()), SecurityUtil.authUserCostsPerDay()));
+        return "costs";
     }
 }

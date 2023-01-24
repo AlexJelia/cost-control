@@ -16,9 +16,9 @@ public class DataJpaUserServiceTest extends AbstractJpaUserServiceTest {
 
     @Test
     public void getWithCosts()  {
-        User user = service.getWithCosts(USER_ID);
-        assertMatch(user, USER);
-        CostTestData.assertMatch(user.getCosts(), CostTestData.COSTS);
+        User admin = service.getWithCosts(ADMIN_ID);
+        assertMatch(admin, ADMIN);
+        CostTestData.assertMatch(admin.getCosts(), CostTestData.ADMIN_COST2, CostTestData.ADMIN_COST1);
     }
 
     @Test(expected = NotFoundException.class)

@@ -12,7 +12,8 @@ VALUES ('User', 'user@yandex.ru', 'password'),
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('ROLE_USER', 100000),
-       ('ROLE_ADMIN', 100001);
+       ('ROLE_ADMIN', 100001),
+       ('ROLE_USER', 100001);
 
 INSERT INTO costs (date_time, description, cost, user_id)
 VALUES ('2022-05-30 10:00:00', 'Завтрак', 500, 100000),
