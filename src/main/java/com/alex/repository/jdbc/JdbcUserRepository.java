@@ -48,7 +48,7 @@ public class JdbcUserRepository implements UserRepository {
         } else {
             if (namedParameterJdbcTemplate.update("""
                        UPDATE users SET name=:name, email=:email, password=:password, 
-                       registered=:registered, enabled=:enabled, costs_per_day=:caloriesPerDay WHERE id=:id
+                       registered=:registered, enabled=:enabled, costs_per_day=:costsPerDay WHERE id=:id
                     """, parameterSource) == 0) {
                 return null;
             }

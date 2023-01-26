@@ -3,8 +3,8 @@ package com.alex.costmanager.service;
 import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.repository.JpaUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolationException;
@@ -16,15 +16,15 @@ abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest
     @Autowired
     private JpaUtil jpaUtil;
 
-    @Before
+    @BeforeEach
     @Override
-    public void setUp() {
+     void setUp() {
         super.setUp();
         jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
-    public void createWithException() {
+     void createWithException() {
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);

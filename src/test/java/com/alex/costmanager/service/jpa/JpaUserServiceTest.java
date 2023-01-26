@@ -7,5 +7,5 @@ import static com.alex.Profiles.JPA;
 
 
 @ActiveProfiles(JPA)
-public class JpaUserServiceTest extends AbstractJpaUserServiceTest {
+class JpaUserServiceTest extends AbstractJpaUserServiceTest {
 }

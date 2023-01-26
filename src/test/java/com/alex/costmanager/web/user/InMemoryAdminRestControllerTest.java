@@ -3,10 +3,10 @@ package com.alex.costmanager.web.user;
 import com.alex.costmanager.repository.inmemory.InMemoryUserRepository;
 import com.alex.util.exception.NotFoundException;
 import com.alex.web.user.AdminRestController;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,42 +15,43 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.Arrays;
 
 import static com.alex.costmanager.UserTestData.USER_ID;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class InMemoryAdminRestControllerTest {
+class InMemoryAdminRestControllerTest {
     private static final Logger log = LoggerFactory.getLogger(InMemoryAdminRestControllerTest.class);
 
     private static ConfigurableApplicationContext appCtx;
     private static AdminRestController controller;
 
-    @BeforeClass
-    public static void beforeClass() {
+    @BeforeAll
+    static void beforeClass() {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/inmemory.xml");
         log.info("\n{}\n", Arrays.toString(appCtx.getBeanDefinitionNames()));
         controller = appCtx.getBean(AdminRestController.class);
     }
 
-    @AfterClass
-    public static void afterClass() {
+    @AfterAll
+    static void afterClass() {
 //        May cause during JUnit "Cache is not alive (STATUS_SHUTDOWN)" as JUnit share Spring context for speed
 //        http://stackoverflow.com/questions/16281802/ehcache-shutdown-causing-an-exception-while-running-test-suite
 //        appCtx.close();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // re-initialize
         InMemoryUserRepository repository = appCtx.getBean(InMemoryUserRepository.class);
         repository.init();
     }
 
-    @Test(expected = NotFoundException.class)
-    public void delete() {
+    @Test
+    void delete() {
         controller.delete(USER_ID);
-        controller.get(USER_ID);
+        assertThrows(NotFoundException.class, () -> controller.get(USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
-    public void deleteNotFound() {
-        controller.delete(10);
+    @Test
+    void deleteNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () -> controller.delete(10));
     }
 }

@@ -5,5 +5,5 @@ import org.springframework.test.context.ActiveProfiles;
 import static com.alex.Profiles.JPA;
 
 @ActiveProfiles(JPA)
-public class JpaCostServiceTest extends AbstractCostServiceTest {
+class JpaCostServiceTest extends AbstractCostServiceTest {
 }

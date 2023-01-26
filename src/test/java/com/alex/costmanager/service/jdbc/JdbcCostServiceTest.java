@@ -7,5 +7,5 @@ import static com.alex.Profiles.JDBC;
 
 
 @ActiveProfiles(JDBC)
-public class JdbcCostServiceTest extends AbstractCostServiceTest {
+class JdbcCostServiceTest extends AbstractCostServiceTest {
 }
