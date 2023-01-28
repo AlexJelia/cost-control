@@ -1,14 +1,16 @@
-package ru.javawebinar.topjava.web.user;
+package com.alex.costmanager.web.user;
 
+import com.alex.costmanager.web.AbstractControllerTest;
+import com.alex.web.user.AdminRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.topjava.web.AbstractControllerTest;
 
+import static com.alex.costmanager.UserTestData.ADMIN_ID;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
+
 
 class AdminRestControllerTest extends AbstractControllerTest {
 

@@ -17,7 +17,6 @@ import java.util.Objects;
 import static com.alex.util.TimeUtil.parseLocalDate;
 import static com.alex.util.TimeUtil.parseLocalTime;
 
-
 @Controller
 @RequestMapping(value = "/costs")
 public class JspCostController extends AbstractCostController {
