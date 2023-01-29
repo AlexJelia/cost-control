@@ -2,11 +2,14 @@ package com.alex.costmanager;
 
 import com.alex.model.Role;
 import com.alex.model.User;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static com.alex.costmanager.TestUtil.readFromJsonMvcResult;
+import static com.alex.costmanager.TestUtil.readListFromJsonMvcResult;
 import static com.alex.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,5 +42,13 @@ public class UserTestData {
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("registered", "costs").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(User... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, User.class), List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(User expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
     }
 }
