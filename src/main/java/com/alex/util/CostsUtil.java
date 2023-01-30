@@ -32,4 +32,8 @@ public class CostsUtil {
                         sumPerDay.get(el.getDate()) > costsPerDay))
                 .collect(Collectors.toList());
     }
+
+    public static CostTo createTo(Cost cost, boolean excess) {
+        return new CostTo(cost.getId(), cost.getDateTime(), cost.getDescription(), cost.getCost(), excess);
+    }
 }

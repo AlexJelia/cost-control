@@ -100,7 +100,7 @@ public abstract class AbstractCostServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void createWithException() {
+    void createWithException() {
         Assumptions.assumeTrue(isJpaBased(), "Validation not supported (JPA only)");
         validateRootCause(() -> service.create(new Cost(null, of(2022, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Cost(null, null, "Description", 300), USER_ID), ConstraintViolationException.class);

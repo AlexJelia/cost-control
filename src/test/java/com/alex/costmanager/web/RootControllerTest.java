@@ -1,12 +1,15 @@
 package com.alex.costmanager.web;
 
 import com.alex.model.User;
+import com.alex.web.SecurityUtil;
 import org.assertj.core.matcher.AssertionMatcher;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.alex.costmanager.CostTestData.COSTS;
 import static com.alex.costmanager.UserTestData.*;
+import static com.alex.util.CostsUtil.getTransferObjects;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -14,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RootControllerTest extends AbstractControllerTest {
 
     @Test
-    public void getUsers() throws Exception {
+    void getUsers() throws Exception {
         mockMvc.perform(get("/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -28,5 +31,15 @@ class RootControllerTest extends AbstractControllerTest {
                             }
                         }
                 ));
+    }
+
+    @Test
+    void testMeals() throws Exception {
+        mockMvc.perform(get("/costs"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("costs"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/costs.jsp"))
+                .andExpect(model().attribute("costs",getTransferObjects(COSTS, SecurityUtil.authUserCostsPerDay())));
     }
 }

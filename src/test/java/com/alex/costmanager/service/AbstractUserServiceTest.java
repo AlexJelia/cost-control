@@ -4,6 +4,7 @@ import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.service.UserService;
 import com.alex.util.exception.NotFoundException;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
      void createWithException() {
+        Assumptions.assumeTrue(isJpaBased(), "Validation not supported (JPA only)");
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);

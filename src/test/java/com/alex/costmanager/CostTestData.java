@@ -2,10 +2,13 @@ package com.alex.costmanager;
 
 
 import com.alex.model.Cost;
+import com.alex.to.CostTo;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.Month;
 import java.util.List;
 
+import static com.alex.costmanager.TestUtil.readListFromJsonMvcResult;
 import static com.alex.model.AbstractBaseEntity.START_SEQ;
 import static java.time.LocalDateTime.of;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,5 +48,13 @@ public class CostTestData {
 
     public static void assertMatch(Iterable<Cost> actual, Iterable<Cost> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(CostTo... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(Iterable<CostTo> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, CostTo.class)).isEqualTo(expected);
     }
 }

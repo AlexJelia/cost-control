@@ -1,6 +1,8 @@
 package com.alex.to;
 
+import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 //transfer object
 public class CostTo {
@@ -10,6 +12,7 @@ public class CostTo {
     protected final int cost;
     protected final boolean excess;
 
+    @ConstructorProperties({"id", "dateTime", "description", "cost", "excess"})
     public CostTo(Integer id, LocalDateTime dateTime, String description, int cost, boolean excess) {
         this.id = id;
         this.dateTime = dateTime;
@@ -36,6 +39,23 @@ public class CostTo {
 
     public boolean isExcess() {
         return excess;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CostTo that = (CostTo) o;
+        return cost == that.cost &&
+                excess == that.excess &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(dateTime, that.dateTime) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dateTime, description, cost, excess);
     }
 
     @Override

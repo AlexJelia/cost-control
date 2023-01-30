@@ -1,11 +1,8 @@
 package com.alex.costmanager.web;
 
 import com.alex.costmanager.AllActiveProfileResolver;
-import com.alex.repository.JpaUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -39,12 +36,6 @@ abstract public class AbstractControllerTest {
     protected MockMvc mockMvc;
 
     @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired(required = false)
-    private JpaUtil jpaUtil;
-
-    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @PostConstruct
@@ -53,13 +44,5 @@ abstract public class AbstractControllerTest {
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
                 .build();
-    }
-
-    @BeforeEach
-    void setUp() {
-        cacheManager.getCache("users").clear();
-        if (jpaUtil != null) {
-            jpaUtil.clear2ndLevelHibernateCache();
-        }
     }
 }
