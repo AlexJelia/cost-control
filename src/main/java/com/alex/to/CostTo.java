@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 //transfer object
-public class CostTo {
-    protected Integer id;
+public class CostTo extends BaseTo {
     protected final LocalDateTime dateTime;
     protected final String description;
     protected final int cost;
@@ -14,7 +13,7 @@ public class CostTo {
 
     @ConstructorProperties({"id", "dateTime", "description", "cost", "excess"})
     public CostTo(Integer id, LocalDateTime dateTime, String description, int cost, boolean excess) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.cost = cost;
@@ -23,10 +22,6 @@ public class CostTo {
 
     public LocalDateTime getDateTime() {
         return dateTime;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getDescription() {

@@ -1,9 +1,10 @@
 package com.alex.web.user;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.alex.model.User;
 import com.alex.service.UserService;
+import com.alex.to.UserTo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -47,6 +48,12 @@ public abstract class AbstractUserController {
     public User getByMail(String email) {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
+    }
+
+    public void update(UserTo userTo, int id) {
+        log.info("update {} with id={}", userTo, id);
+        assureIdConsistent(userTo, id);
+        service.update(userTo);
     }
 
     public void enable(int id, boolean enabled) {
