@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
-import static com.alex.util.CostsUtil.DEFAULT_COSTS_PER_DAY;
+import static com.alex.util.UserUtil.DEFAULT_COSTS_PER_DAY;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({

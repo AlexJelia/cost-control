@@ -2,7 +2,7 @@ package com.alex.web;
 
 import com.alex.model.AbstractBaseEntity;
 
-import static com.alex.util.CostsUtil.DEFAULT_COSTS_PER_DAY;
+import static com.alex.util.UserUtil.DEFAULT_COSTS_PER_DAY;
 
 public class SecurityUtil {
 
