@@ -27,7 +27,7 @@ public class AdminUIController extends AbstractUserController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam Integer id,
+    public void createOrUpdate(@RequestParam(required = false) Integer id,
                                @RequestParam String name,
                                @RequestParam String email,
                                @RequestParam String password) {

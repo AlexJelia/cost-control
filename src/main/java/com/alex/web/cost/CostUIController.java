@@ -31,7 +31,7 @@ public class CostUIController extends AbstractCostController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam Integer id,
+    public void createOrUpdate(@RequestParam(required = false) Integer id,
                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
                                @RequestParam String description,
                                @RequestParam int cost) {
