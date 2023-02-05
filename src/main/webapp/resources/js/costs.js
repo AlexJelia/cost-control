@@ -11,7 +11,8 @@ function clearFilter() {
     $.get("ajax/profile/costs/", updateTableByData);
 }
 
-$(function () {
+$(document).ready(function () {
+//$(function () {
     makeEditable({
         ajaxUrl: "ajax/profile/costs/",
         datatableApi: $("#datatable").DataTable({
