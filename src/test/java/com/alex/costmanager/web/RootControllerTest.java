@@ -1,14 +1,12 @@
 package com.alex.costmanager.web;
 
-import com.alex.model.User;
 import com.alex.web.SecurityUtil;
-import org.assertj.core.matcher.AssertionMatcher;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static com.alex.costmanager.CostTestData.COSTS;
-import static com.alex.costmanager.UserTestData.*;
+import static com.alex.costmanager.TestUtil.userAuth;
+import static com.alex.costmanager.UserTestData.ADMIN;
+import static com.alex.costmanager.UserTestData.USER;
 import static com.alex.util.CostsUtil.getTransferObjects;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -18,7 +16,8 @@ class RootControllerTest extends AbstractControllerTest {
 
     @Test
     void getUsers() throws Exception {
-        mockMvc.perform(get("/users"))
+        mockMvc.perform(get("/users")
+                .with(userAuth(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("users"))
@@ -26,8 +25,17 @@ class RootControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testMeals() throws Exception {
-        mockMvc.perform(get("/costs"))
+    void unAuth() throws Exception {
+        mockMvc.perform(get("/users"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    void testCosts() throws Exception {
+        mockMvc.perform(get("/costs")
+                .with(userAuth(USER)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("costs"))

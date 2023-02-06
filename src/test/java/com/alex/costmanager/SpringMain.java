@@ -12,6 +12,9 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.alex.costmanager.TestUtil.mockAuthorize;
+import static com.alex.costmanager.UserTestData.USER;
+
 public class SpringMain {
     public static void main(String[] args) {
 
@@ -20,6 +23,8 @@ public class SpringMain {
             appCtx.getEnvironment().setActiveProfiles( Profiles.REPOSITORY_IMPLEMENTATION);
             appCtx.load("spring/spring-app.xml", "spring/inmemory.xml");
             appCtx.refresh();
+
+            mockAuthorize(USER);
 
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
