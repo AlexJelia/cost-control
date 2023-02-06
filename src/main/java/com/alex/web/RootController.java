@@ -1,7 +1,6 @@
 package com.alex.web;
 
 import com.alex.service.CostService;
-import com.alex.util.CostsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +29,6 @@ public class RootController {
 
     @GetMapping("/costs")
     public String getCosts(Model model) {
-        model.addAttribute("costs",
-                CostsUtil.getTransferObjects(costService.getAll(SecurityUtil.authUserId()), SecurityUtil.authUserCostsPerDay()));
         return "costs";
     }
 }

@@ -2,13 +2,15 @@ package com.alex.web.cost;
 
 import com.alex.model.Cost;
 import com.alex.to.CostTo;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.alex.util.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -23,6 +25,12 @@ public class CostUIController extends AbstractCostController {
     }
 
     @Override
+    @GetMapping(value = "/{id}")
+    public Cost get(@PathVariable int id) {
+        return super.get(id);
+    }
+
+    @Override
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -31,14 +39,16 @@ public class CostUIController extends AbstractCostController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@RequestParam(required = false) Integer id,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                               @RequestParam String description,
-                               @RequestParam int cost) {
-        Cost newCost = new Cost(id, dateTime, description, cost);
-        if (newCost.isNew()) {
-            super.create(newCost);
+    public ResponseEntity<String> createOrUpdate(@Valid Cost cost, BindingResult result) {
+        if (result.hasErrors()) {
+            return ValidationUtil.getErrorResponse(result);
         }
+        if (cost.isNew()) {
+            super.create(cost);
+        } else {
+            super.update(cost, cost.getId());
+        }
+        return ResponseEntity.ok().build();
     }
 
     @Override

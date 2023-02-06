@@ -3,9 +3,12 @@ package com.alex.util;
 
 import com.alex.HasId;
 import com.alex.util.exception.NotFoundException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 import javax.validation.*;
 import java.util.Set;
+import java.util.StringJoiner;
 
 public class ValidationUtil {
 
@@ -72,5 +75,20 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static ResponseEntity<String> getErrorResponse(BindingResult result) {
+        StringJoiner joiner = new StringJoiner("<br>");
+        result.getFieldErrors().forEach(
+                fe -> {
+                    String msg = fe.getDefaultMessage();
+                    if (msg != null) {
+                        if (!msg.startsWith(fe.getField())) {
+                            msg = fe.getField() + ' ' + msg;
+                        }
+                        joiner.add(msg);
+                    }
+                });
+        return ResponseEntity.unprocessableEntity().body(joiner.toString());
     }
 }

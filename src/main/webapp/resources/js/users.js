@@ -19,13 +19,7 @@ function enable(chkbox, id) {
 //$(function () {
     makeEditable({
             ajaxUrl: "ajax/admin/users/",
-            datatableApi: $("#datatable").DataTable({
-                "ajax": {
-                    "url": userAjaxUrl,
-                    "dataSrc": ""
-                },
-                "paging": false,
-                "info": true,
+            datatableOpts: {
                 "columns": [
                     {
                         "data": "name"
@@ -82,7 +76,7 @@ function enable(chkbox, id) {
                         $(row).attr("data-userEnabled", false);
                     }
                 }
-            }),
+            },
             updateTable: function () {
                 $.get(userAjaxUrl, updateTableByData);
             }

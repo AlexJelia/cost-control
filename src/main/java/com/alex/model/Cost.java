@@ -1,8 +1,10 @@
 package com.alex.model;
 
+import com.alex.util.TimeUtil;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +28,7 @@ public class Cost extends AbstractBaseEntity {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
+    @DateTimeFormat(pattern = TimeUtil.DATE_TIME_PATTERN)
     protected LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
@@ -34,14 +37,13 @@ public class Cost extends AbstractBaseEntity {
     protected String description;
 
     @Column(name = "cost", nullable = false)
+    @NotNull
     @Range(min = 1, max = 1000000)
-    protected int cost;
+    protected Integer cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    //validation test
-    //  @NotNull
     private User user;
 
     public Cost() {
@@ -86,7 +88,7 @@ public class Cost extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 

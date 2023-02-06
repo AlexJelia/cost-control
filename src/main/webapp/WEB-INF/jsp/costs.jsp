@@ -17,21 +17,21 @@
             <div class="card-body pb-0">
                 <form id="filter">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="offset-1 col-2">
                             <label for="startDate"><spring:message code="cost.startDate"/></label>
-                            <input class="form-control" type="date" name="startDate" id="startDate">
+                            <input class="form-control" name="startDate" id="startDate">
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <label for="endDate"><spring:message code="cost.endDate"/></label>
-                            <input class="form-control" type="date" name="endDate" id="endDate">
+                            <input class="form-control" name="endDate" id="endDate">
                         </div>
                         <div class="offset-2 col-2">
                             <label for="startTime"><spring:message code="cost.startTime"/></label>
-                            <input class="form-control" type="time" name="startTime" id="startTime">
+                            <input class="form-control" name="startTime" id="startTime">
                         </div>
                         <div class="col-2">
                             <label for="endTime"><spring:message code="cost.endTime"/></label>
-                            <input class="form-control" type="time" name="endTime" id="endTime">
+                            <input class="form-control" name="endTime" id="endTime">
                         </div>
                     </div>
                 </form>
@@ -62,19 +62,6 @@
                 <th></th>
             </tr>
             </thead>
-            <c:forEach items="${costs}" var="cost">
-                <jsp:useBean id="cost" type="com.alex.to.CostTo"/>
-                <tr data-costExcess="${cost.excess}">
-                    <td>
-                            <%=TimeUtil.toString(cost.getDateTime())%>
-                            <%--${fn:formatDateTime(cost.dateTime)}--%>
-                    </td>
-                    <td>${cost.description}</td>
-                    <td>${cost.cost}</td>
-                    <td><a><span class="fa fa-pencil"></span></a></td>
-                    <td><a onclick="deleteRow(${cost.id})"><span class="fa fa-remove"></span></a></td>
-                </tr>
-            </c:forEach>
         </table>
     </div>
 </div>
@@ -83,7 +70,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle"><spring:message code="cost.add"/></h4>
+                <h4 class="modal-title" id="modalTitle"></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -92,7 +79,7 @@
 
                     <div class="form-group">
                         <label for="dateTime" class="col-form-label"><spring:message code="cost.dateTime"/></label>
-                        <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                        <input class="form-control" id="dateTime" name="dateTime"
                                placeholder="<spring:message code="cost.dateTime"/>">
                     </div>
 
@@ -125,4 +112,7 @@
 
 <jsp:include page="fragments/footer.jsp"/>
 </body>
+<jsp:include page="fragments/i18n.jsp">
+    <jsp:param name="page" value="cost"/>
+</jsp:include>
 </html>
