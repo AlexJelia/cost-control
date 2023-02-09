@@ -2,11 +2,14 @@ package com.alex.util;
 
 
 import com.alex.HasId;
+import com.alex.util.exception.ErrorType;
 import com.alex.util.exception.IllegalRequestDataException;
 import com.alex.util.exception.NotFoundException;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -95,5 +98,15 @@ public class ValidationUtil {
                     }
                 });
         return ResponseEntity.unprocessableEntity().body(joiner.toString());
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
     }
 }
