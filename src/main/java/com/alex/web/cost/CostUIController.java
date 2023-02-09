@@ -1,9 +1,11 @@
 package com.alex.web.cost;
 
+import com.alex.View;
 import com.alex.model.Cost;
 import com.alex.to.CostTo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,7 +38,7 @@ public class CostUIController extends AbstractCostController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void createOrUpdate(@Valid Cost cost){
+    public void createOrUpdate(@Validated(View.Web.class)@Valid Cost cost){
         if (cost.isNew()) {
             super.create(cost);
         } else {
