@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.util.exception;
+package com.alex.util.exception;
 
 public class ErrorInfo {
     private final String url;

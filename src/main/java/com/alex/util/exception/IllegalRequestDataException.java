@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.util.exception;
+package com.alex.util.exception;
 
 public class IllegalRequestDataException extends RuntimeException {
     public IllegalRequestDataException(String msg) {
