@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.alex.costmanager.CostTestData.assertMatch;
 import static com.alex.costmanager.CostTestData.contentJson;
@@ -21,6 +23,8 @@ import static com.alex.costmanager.UserTestData.*;
 import static com.alex.model.AbstractBaseEntity.START_SEQ;
 import static com.alex.util.CostsUtil.createTo;
 import static com.alex.util.CostsUtil.getTransferObjects;
+import static com.alex.util.exception.ErrorType.VALIDATION_ERROR;
+import static com.alex.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_DATETIME;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -127,5 +131,60 @@ class CostRestControllerTest extends AbstractControllerTest {
                         .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(contentJson(getTransferObjects(COSTS, USER.getCostsPerDay())));
+    }
+
+    @Test
+    void createInvalid() throws Exception {
+        Cost invalid = new Cost(null, null, "Dummy", 200);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    void updateInvalid() throws Exception {
+        Cost invalid = new Cost(COST1_ID, null, null, 6000);
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + COST1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+       Cost invalid = new Cost(COST1_ID, COST2.getDateTime(), "Dummy", 200);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + COST1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_DATETIME));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        Cost invalid = new Cost(null, ADMIN_COST1.getDateTime(), "Dummy", 200);
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_DATETIME));
     }
 }

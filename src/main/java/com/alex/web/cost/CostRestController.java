@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -41,12 +42,12 @@ public class CostRestController extends AbstractCostController {
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Cost cost, @PathVariable int id) {
+    public void update(@Valid @RequestBody Cost cost, @PathVariable int id) {
         super.update(cost, id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cost> createWithLocation(@RequestBody Cost cost) {
+    public ResponseEntity<Cost> createWithLocation(@Valid@RequestBody Cost cost) {
         Cost created = super.create(cost);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

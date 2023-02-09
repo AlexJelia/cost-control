@@ -17,7 +17,7 @@
                 <h3>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h3>
                 <form:form class="form-group" modelAttribute="userTo" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
-
+                    <input name="id" value="${userTo.id}" type="hidden">
                     <tagz:inputField labelCode="user.name" name="name"/>
                     <tagz:inputField labelCode="user.email" name="email"/>
                     <tagz:inputField labelCode="user.password" name="password" inputType="password"/>

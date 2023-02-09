@@ -2,11 +2,8 @@ package com.alex.web.cost;
 
 import com.alex.model.Cost;
 import com.alex.to.CostTo;
-import com.alex.util.ValidationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,17 +36,12 @@ public class CostUIController extends AbstractCostController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> createOrUpdate(@Valid Cost cost, BindingResult result) {
-        if (result.hasErrors()) {
-            // TODO change to exception handler
-            return ValidationUtil.getErrorResponse(result);
-        }
+    public void createOrUpdate(@Valid Cost cost){
         if (cost.isNew()) {
             super.create(cost);
         } else {
             super.update(cost, cost.getId());
         }
-        return ResponseEntity.ok().build();
     }
 
     @Override

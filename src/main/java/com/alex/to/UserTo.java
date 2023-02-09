@@ -1,6 +1,7 @@
 package com.alex.to;
 
 import com.alex.util.UserUtil;
+import com.alex.web.HasEmail;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class UserTo extends BaseTo implements Serializable {
+public class UserTo extends BaseTo implements HasEmail, Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
@@ -56,6 +57,7 @@ public class UserTo extends BaseTo implements Serializable {
         this.name = name;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }

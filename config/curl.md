@@ -30,3 +30,4 @@
 
 ### validate with Error
 `curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/costs_control/rest/admin/users --user admin@gmail.com:admin`
+`curl -s -X PUT -d '{"dateTime":"2022-05-30T07:00"}' -H 'Content-Type: application/json' http://localhost:8080/costs_control/rest/profile/costs/100003 --user user@yandex.ru:password`

@@ -1,5 +1,6 @@
 package com.alex.model;
 
+import com.alex.web.HasEmail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -24,7 +25,7 @@ import static com.alex.util.UserUtil.DEFAULT_COSTS_PER_DAY;
 })
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements HasEmail {
 
     public static final String DELETE =  "User.delete";
     public static final String BY_EMAIL = "User.getByEmail";
@@ -89,6 +90,7 @@ public class User extends AbstractNamedEntity {
         setRoles(roles);
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
