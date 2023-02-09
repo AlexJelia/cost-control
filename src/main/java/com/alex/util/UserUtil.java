@@ -3,6 +3,8 @@ package com.alex.util;
 import com.alex.model.Role;
 import com.alex.model.User;
 import com.alex.to.UserTo;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 public class UserUtil {
 
@@ -21,6 +23,13 @@ public class UserUtil {
         user.setEmail(userTo.getEmail().toLowerCase());
         user.setCostsPerDay(userTo.getCostsPerDay());
         user.setPassword(userTo.getPassword());
+        return user;
+    }
+
+    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
+        String password = user.getPassword();
+        user.setPassword(StringUtils.hasText(password) ? passwordEncoder.encode(password) : password);
+        user.setEmail(user.getEmail().toLowerCase());
         return user;
     }
 }

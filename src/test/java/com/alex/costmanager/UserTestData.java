@@ -2,6 +2,7 @@ package com.alex.costmanager;
 
 import com.alex.model.Role;
 import com.alex.model.User;
+import com.alex.web.json.JsonUtil;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Collections;
@@ -33,7 +34,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "costs");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "costs", "password");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -41,7 +42,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "costs").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "costs","password").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {
@@ -50,5 +51,9 @@ public class UserTestData {
 
     public static ResultMatcher contentJson(User expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
+    }
+
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }
