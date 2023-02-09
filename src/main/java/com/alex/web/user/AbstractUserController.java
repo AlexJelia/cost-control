@@ -3,6 +3,7 @@ package com.alex.web.user;
 import com.alex.model.User;
 import com.alex.service.UserService;
 import com.alex.to.UserTo;
+import com.alex.util.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public abstract class AbstractUserController {
     public User get(int id) {
         log.info("get {}", id);
         return service.get(id);
+    }
+
+    public User create(UserTo userTo) {
+        return create(UserUtil.createNewFromTo(userTo));
     }
 
     public User create(User user) {

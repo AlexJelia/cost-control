@@ -51,11 +51,26 @@ class CostRestControllerTest extends AbstractControllerTest {
 
 
     @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_COST_ID)
+                .with(userHttpBasic(USER)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void delete() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + COST1_ID)
                         .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
         assertMatch(costService.getAll(START_SEQ), COST7,COST6, COST5, COST4, COST3, COST2);
+    }
+
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + ADMIN_COST_ID)
+                .with(userHttpBasic(USER)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
