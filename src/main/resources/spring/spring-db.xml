@@ -79,18 +79,23 @@
                     <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
                     <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> <!--default-->
-                </map>
-            </property>
 
-            <property name="jpaVendorAdapter">
-                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                      p:showSql="${jpa.showSql}">
+                    <!--validation-->
+                    <entry key="javax.persistence.validation.group.pre-persist" value="com.alex.View$Persist"/>
+                    <entry key="javax.persistence.validation.group.pre-update" value="com.alex.View$Persist"/>
+
+                        </map>
+                    </property>
+
+                    <property name="jpaVendorAdapter">
+                        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                              p:showSql="${jpa.showSql}">
+                        </bean>
+                    </property>
                 </bean>
-            </property>
-        </bean>
 
-        <tx:annotation-driven/>
-        <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
+                <tx:annotation-driven/>
+                <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
 
