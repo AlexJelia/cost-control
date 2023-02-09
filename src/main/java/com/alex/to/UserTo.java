@@ -64,6 +64,10 @@ public class UserTo extends BaseTo implements Serializable {
         this.email = email;
     }
 
+    public void setCostsPerDay(Integer costsPerDay) {
+        this.costsPerDay = costsPerDay;
+    }
+
     public Integer getCostsPerDay() {
         return costsPerDay;
     }
