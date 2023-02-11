@@ -37,12 +37,6 @@ public class ControllerExceptionHandler {
         mav.addObject("typeMessage", messageUtil.getMessage(errorType.getErrorCode()));
         mav.addObject("exception", rootCause);
         mav.addObject("message", ValidationUtil.getMessage(rootCause));
-
-        // Interceptor is not invoked, put userTo
-        AuthorizedUser authorizedUser = SecurityUtil.safeGet();
-        if (authorizedUser != null) {
-            mav.addObject("userTo", authorizedUser.getUserTo());
-        }
         return mav;
     }
 }
